@@ -35,7 +35,12 @@ export default defineHook(
               const section = field.substring(0, underscoreIndex);
               const fieldName = field.substring(underscoreIndex + 1);
 
-              if (!organizedData[section]) organizedData[section] = {};
+              if (!organizedData[section]) {
+                organizedData[section] = {};
+              } else if (typeof organizedData[section] !== 'object') {
+                // section already exists as a field, make it an object
+                organizedData[section] = {_: organizedData[section]};
+              }
               organizedData[section][fieldName] = value;
             } else {
               organizedData[field] = value;
